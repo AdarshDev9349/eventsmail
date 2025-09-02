@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hackmail - Secure Email Dashboard
 
-## Getting Started
+A secure email management platform built with Next.js, featuring Google OAuth authentication and protected routes.
 
-First, run the development server:
+## Features
+
+- 🔐 **Secure Google OAuth Authentication** - Login with your Google account
+- 🛡️ **Protected Routes** - Middleware-based route protection
+- 📱 **Responsive Design** - Works on desktop and mobile devices
+- 🎨 **Modern UI** - Clean and intuitive interface with Tailwind CSS
+- ⚡ **Fast Performance** - Built with Next.js 15 and React 19
+- 🔒 **Session Management** - Secure JWT-based sessions
+
+## Security Features
+
+- OAuth 2.0 authentication with Google
+- Encrypted data transfer
+- Protected API routes
+- Session-based authorization
+- Automatic redirect handling
+- Secure middleware implementation
+
+## Setup Instructions
+
+### 1. Environment Variables
+
+Copy the environment example file and configure your settings:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then fill in your environment variables in `.env.local`:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+# Generate a random secret for production
+NEXTAUTH_SECRET=your-random-secret-key-here
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Your app URL
+NEXTAUTH_URL=http://localhost:3000
 
-## Learn More
+# Google OAuth credentials (get from Google Cloud Console)
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 2. Google OAuth Setup
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the Google+ API
+4. Go to "Credentials" → "Create Credentials" → "OAuth 2.0 Client IDs"
+5. Set application type to "Web application"
+6. Add authorized redirect URIs:
+   - `http://localhost:3000/api/auth/callback/google` (for development)
+   - `https://yourdomain.com/api/auth/callback/google` (for production)
+7. Copy the Client ID and Client Secret to your `.env.local` file
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3. Installation & Development
 
-## Deploy on Vercel
+```bash
+# Install dependencies
+npm install
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Run development server
+npm run dev
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+## Project Structure
+
+```
+hackmail/
+├── src/
+│   ├── app/
+│   │   ├── api/auth/[...nextauth]/route.ts  # NextAuth API routes
+│   │   ├── auth/error/page.tsx              # Auth error page
+│   │   ├── dashboard/page.tsx               # Protected dashboard
+│   │   ├── layout.tsx                       # Root layout
+│   │   └── page.tsx                         # Login page
+│   ├── components/
+│   │   ├── sign-in.tsx                      # Google sign-in component
+│   │   └── sign-out.tsx                     # Sign-out component
+│   ├── auth.ts                              # NextAuth configuration
+│   └── middleware.ts                        # Route protection middleware
+├── .env.example                             # Environment variables template
+└── README.md
+```
+
+## Routes
+
+- `/` - Login page (redirects to dashboard if authenticated)
+- `/dashboard` - Protected dashboard (requires authentication)
+- `/auth/error` - Authentication error page
+- `/api/auth/*` - NextAuth API routes
+
+## How It Works
+
+1. **Login Flow**: 
+   - User visits the home page
+   - If not authenticated, shows Google login button
+   - User clicks "Continue with Google"
+   - Redirected to Google OAuth consent screen
+   - After approval, redirected back to dashboard
+
+2. **Protection**:
+   - Middleware checks authentication status on every request
+   - Unauthenticated users are redirected to login
+   - Authenticated users accessing login page are redirected to dashboard
+
+3. **Session Management**:
+   - JWT-based sessions with NextAuth
+   - Secure session cookies
+   - Automatic session refresh
+
+## Technologies Used
+
+- **Next.js 15** - React framework
+- **NextAuth.js** - Authentication library
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **React 19** - UI library
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.
