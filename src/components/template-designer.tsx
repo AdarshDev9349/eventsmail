@@ -192,10 +192,10 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
   return (
     <div className="grid grid-cols-12 gap-6 h-screen">
       {/* Sidebar */}
-      <div className="col-span-3 bg-white rounded-xl shadow-lg p-6">
+      <div className="col-span-3 rounded-2xl shadow-lg p-6" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
         <div className="mb-6">
-          <h3 className="text-lg font-semibold mb-4">Spreadsheet Headers</h3>
-          <p className="text-sm text-gray-600 mb-4">
+          <h3 className="text-lg font-semibold mb-4 text-white">Spreadsheet Headers</h3>
+          <p className="text-sm text-gray-300 mb-4">
             Drag these headers to the canvas to create variable fields
           </p>
           
@@ -209,15 +209,20 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
                   e.dataTransfer.setData('text/plain', header);
                 }}
                 onDragEnd={() => setDraggedHeader(null)}
-                className={`p-3 bg-blue-50 border border-blue-200 rounded-lg cursor-move hover:bg-blue-100 transition-colors select-none ${
+                className={`p-3 border rounded-xl cursor-move hover:scale-105 transition-all select-none ${
                   draggedHeader === header ? 'opacity-50' : ''
                 }`}
+                style={{
+                  backgroundColor: '#384e77',
+                  borderColor: '#683abe',
+                  color: 'white'
+                }}
               >
                 <div className="flex items-center space-x-2">
-                  <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4" style={{ color: '#b298dc' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
                   </svg>
-                  <span className="font-medium text-blue-800">{header}</span>
+                  <span className="font-medium">{header}</span>
                 </div>
               </div>
             ))}
@@ -226,54 +231,64 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
 
         {/* Element Properties */}
         {selectedElementData && (
-          <div className="border-t pt-6">
-            <h3 className="text-lg font-semibold mb-4">Element Properties</h3>
+          <div className="border-t pt-6" style={{ borderColor: '#384e77' }}>
+            <h3 className="text-lg font-semibold mb-4 text-white">Element Properties</h3>
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-300 mb-1">
                   Font Size
                 </label>
                 <input
                   type="number"
                   value={selectedElementData.fontSize || 16}
                   onChange={(e) => updateElement(selectedElement!, { fontSize: parseInt(e.target.value) })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border rounded-lg text-white"
+                  style={{ 
+                    borderColor: '#384e77', 
+                    backgroundColor: '#0d0630'
+                  }}
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-300 mb-1">
                   Color
                 </label>
                 <input
                   type="color"
                   value={selectedElementData.color || '#000000'}
                   onChange={(e) => updateElement(selectedElement!, { color: e.target.value })}
-                  className="w-full h-10 border border-gray-300 rounded-lg cursor-pointer"
+                  className="w-full h-10 border rounded-lg cursor-pointer"
+                  style={{ borderColor: '#384e77', backgroundColor: '#0d0630' }}
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-300 mb-1">
                   Font Family
                 </label>
                 <select
                   value={selectedElementData.fontFamily || 'Arial'}
                   onChange={(e) => updateElement(selectedElement!, { fontFamily: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border rounded-lg text-white"
+                  style={{ 
+                    borderColor: '#384e77', 
+                    backgroundColor: '#0d0630'
+                  }}
                 >
-                  <option value="Arial">Arial</option>
-                  <option value="Times New Roman">Times New Roman</option>
-                  <option value="Helvetica">Helvetica</option>
-                  <option value="Georgia">Georgia</option>
-                  <option value="Verdana">Verdana</option>
+                  <option value="Arial" style={{ backgroundColor: '#0d0630', color: 'white' }}>Arial</option>
+                  <option value="Times New Roman" style={{ backgroundColor: '#0d0630', color: 'white' }}>Times New Roman</option>
+                  <option value="Helvetica" style={{ backgroundColor: '#0d0630', color: 'white' }}>Helvetica</option>
+                  <option value="Georgia" style={{ backgroundColor: '#0d0630', color: 'white' }}>Georgia</option>
+                  <option value="Verdana" style={{ backgroundColor: '#0d0630', color: 'white' }}>Verdana</option>
                 </select>
               </div>
               
               <button
                 onClick={() => deleteElement(selectedElement!)}
-                className="w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                className="w-full px-4 py-2 rounded-lg transition-colors text-white font-semibold"
+                style={{ background: 'linear-gradient(135deg, #683abe, #b298dc)' }}
               >
                 Delete Element
               </button>
@@ -283,22 +298,23 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
       </div>
 
       {/* Main Canvas Area */}
-      <div className="col-span-9 bg-white rounded-xl shadow-lg p-6">
+      <div className="col-span-9 rounded-2xl shadow-lg p-6" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
         <div className="mb-6">
-          <h3 className="text-lg font-semibold mb-4">Certificate Template Designer</h3>
+          <h3 className="text-lg font-semibold mb-4 text-white">Certificate Template Designer</h3>
           
           {!template.backgroundImage ? (
-            <div className="text-center py-12 border-2 border-dashed border-gray-300 rounded-lg">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="text-center py-12 border-2 border-dashed rounded-lg" style={{ borderColor: '#384e77' }}>
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#384e77' }}>
+                <svg className="w-8 h-8" style={{ color: '#b298dc' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                 </svg>
               </div>
-              <h4 className="text-lg font-medium text-gray-900 mb-2">Upload Template Background</h4>
-              <p className="text-gray-600 mb-4">Choose an image file to use as your certificate background</p>
+              <h4 className="text-lg font-medium text-white mb-2">Upload Template Background</h4>
+              <p className="text-gray-300 mb-4">Choose an image file to use as your certificate background</p>
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
+                className="px-6 py-3 rounded-xl font-semibold transition-all text-white hover:scale-105"
+                style={{ background: 'linear-gradient(135deg, #683abe, #b298dc)' }}
               >
                 Choose Image
               </button>
@@ -360,9 +376,9 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
                 
                 {/* Drop indicator */}
                 {draggedHeader && (
-                  <div className="absolute inset-0 bg-blue-500 bg-opacity-10 border-2 border-dashed border-blue-500 flex items-center justify-center">
-                    <div className="bg-white px-4 py-2 rounded-lg shadow-lg">
-                      <p className="text-blue-600 font-medium">
+                  <div className="absolute inset-0 bg-opacity-10 border-2 border-dashed flex items-center justify-center" style={{ backgroundColor: '#683abe', borderColor: '#b298dc' }}>
+                    <div className="px-4 py-2 rounded-lg shadow-lg" style={{ backgroundColor: '#0d0630' }}>
+                      <p className="font-medium text-white">
                         Click to place "{draggedHeader}" field
                       </p>
                     </div>
@@ -373,7 +389,8 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
               <div className="mt-4 flex justify-between items-center">
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors"
+                  className="px-4 py-2 text-white rounded-lg transition-colors"
+                  style={{ backgroundColor: '#384e77' }}
                 >
                   Change Background
                 </button>
@@ -381,11 +398,16 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
                 <button
                   onClick={() => onTemplateComplete(template)}
                   disabled={template.elements.length === 0}
-                  className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
+                  className={`px-6 py-3 rounded-xl font-semibold transition-all ${
                     template.elements.length > 0
-                      ? 'bg-green-600 hover:bg-green-700 text-white'
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      ? 'text-white hover:scale-105'
+                      : 'text-gray-500 cursor-not-allowed'
                   }`}
+                  style={{ 
+                    background: template.elements.length > 0
+                      ? 'linear-gradient(135deg, #683abe, #b298dc)'
+                      : '#384e77'
+                  }}
                 >
                   Continue to Email Setup
                 </button>

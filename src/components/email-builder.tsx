@@ -48,26 +48,28 @@ export default function EmailBuilder({ headers, onEmailComplete, initialEmail }:
   return (
     <div className="grid grid-cols-12 gap-6">
       {/* Variables Sidebar */}
-      <div className="col-span-3 bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-lg font-semibold mb-4">Available Variables</h3>
-        <p className="text-sm text-gray-600 mb-4">
+      <div className="col-span-3 rounded-2xl shadow-lg p-6" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
+        <h3 className="text-lg font-semibold mb-4 text-white">Available Variables</h3>
+        <p className="text-sm text-gray-300 mb-4">
           Click to insert variables into your email template
         </p>
         
         <div className="space-y-2">
           {headers.map((header, index) => (
             <div key={index} className="space-y-1">
-              <div className="font-medium text-gray-900">{header}</div>
+              <div className="font-medium text-white">{header}</div>
               <div className="flex space-x-1">
                 <button
                   onClick={() => insertVariable(header, 'subject')}
-                  className="px-2 py-1 text-xs bg-blue-100 hover:bg-blue-200 text-blue-800 rounded transition-colors"
+                  className="px-2 py-1 text-xs rounded transition-colors text-white"
+                  style={{ backgroundColor: '#683abe' }}
                 >
                   + Subject
                 </button>
                 <button
                   onClick={() => insertVariable(header, 'body')}
-                  className="px-2 py-1 text-xs bg-green-100 hover:bg-green-200 text-green-800 rounded transition-colors"
+                  className="px-2 py-1 text-xs rounded transition-colors text-white"
+                  style={{ backgroundColor: '#384e77' }}
                 >
                   + Body
                 </button>
@@ -76,26 +78,29 @@ export default function EmailBuilder({ headers, onEmailComplete, initialEmail }:
           ))}
         </div>
 
-        <div className="mt-6 pt-6 border-t">
-          <h4 className="font-medium text-gray-900 mb-2">Variable Format</h4>
-          <p className="text-sm text-gray-600">
-            Variables are inserted as <code className="bg-gray-100 px-1 rounded">{`{field_name}`}</code> and will be replaced with actual data when sending emails.
+        <div className="mt-6 pt-6 border-t" style={{ borderColor: '#384e77' }}>
+          <h4 className="font-medium text-white mb-2">Variable Format</h4>
+          <p className="text-sm text-gray-300">
+            Variables are inserted as <code className="px-1 rounded text-white" style={{ backgroundColor: '#384e77' }}>{`{field_name}`}</code> and will be replaced with actual data when sending emails.
           </p>
         </div>
       </div>
 
       {/* Email Template Editor */}
-      <div className="col-span-9 bg-white rounded-xl shadow-lg p-6">
+      <div className="col-span-9 rounded-2xl shadow-lg p-6" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
         <div className="flex justify-between items-center mb-6">
-          <h3 className="text-lg font-semibold">Email Template</h3>
+          <h3 className="text-lg font-semibold text-white">Email Template</h3>
           <div className="flex space-x-2">
             <button
               onClick={() => setShowPreview(!showPreview)}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                 showPreview
-                  ? 'bg-gray-600 hover:bg-gray-700 text-white'
-                  : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                  ? 'text-white'
+                  : 'text-white'
               }`}
+              style={{ 
+                backgroundColor: showPreview ? '#683abe' : '#384e77'
+              }}
             >
               {showPreview ? 'Edit Mode' : 'Preview'}
             </button>
@@ -106,7 +111,7 @@ export default function EmailBuilder({ headers, onEmailComplete, initialEmail }:
           <div className="space-y-6">
             {/* Email Subject */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Email Subject
               </label>
               <input
@@ -114,13 +119,17 @@ export default function EmailBuilder({ headers, onEmailComplete, initialEmail }:
                 value={emailTemplate.subject}
                 onChange={(e) => setEmailTemplate(prev => ({ ...prev, subject: e.target.value }))}
                 placeholder="Enter email subject (use variables like {name})"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border rounded-lg text-white placeholder-gray-400"
+                style={{ 
+                  borderColor: '#384e77', 
+                  backgroundColor: '#0d0630'
+                }}
               />
             </div>
 
             {/* Email Body */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Email Body
               </label>
               <textarea
@@ -128,23 +137,32 @@ export default function EmailBuilder({ headers, onEmailComplete, initialEmail }:
                 onChange={(e) => setEmailTemplate(prev => ({ ...prev, body: e.target.value }))}
                 placeholder="Write your email message here. Use variables like {name} to personalize the content."
                 rows={12}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border rounded-lg text-white placeholder-gray-400"
+                style={{ 
+                  borderColor: '#384e77', 
+                  backgroundColor: '#0d0630'
+                }}
               />
             </div>
 
             {/* Action Buttons */}
             <div className="flex justify-between items-center pt-4">
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-gray-300">
                 Email will be sent with the certificate attached as PDF
               </div>
               <button
                 onClick={handleComplete}
                 disabled={!emailTemplate.subject.trim() || !emailTemplate.body.trim()}
-                className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
+                className={`px-6 py-3 rounded-xl font-semibold transition-all ${
                   emailTemplate.subject.trim() && emailTemplate.body.trim()
-                    ? 'bg-green-600 hover:bg-green-700 text-white'
-                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    ? 'text-white hover:scale-105'
+                    : 'text-gray-500 cursor-not-allowed'
                 }`}
+                style={{ 
+                  background: emailTemplate.subject.trim() && emailTemplate.body.trim()
+                    ? 'linear-gradient(135deg, #683abe, #b298dc)'
+                    : '#384e77'
+                }}
               >
                 Continue to Preview & Send
               </button>
@@ -153,31 +171,31 @@ export default function EmailBuilder({ headers, onEmailComplete, initialEmail }:
         ) : (
           /* Preview Mode */
           <div className="space-y-6">
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h4 className="font-medium text-gray-900 mb-4">Email Preview</h4>
+            <div className="rounded-xl p-6" style={{ backgroundColor: '#384e77' }}>
+              <h4 className="font-medium text-white mb-4">Email Preview</h4>
               
-              <div className="bg-white rounded-lg border p-4 space-y-4">
+              <div className="rounded-lg border p-4 space-y-4" style={{ backgroundColor: '#0d0630', borderColor: '#683abe' }}>
                 <div>
-                  <div className="text-sm font-medium text-gray-600">Subject:</div>
-                  <div className="text-gray-900">{previewEmail.subject || 'No subject'}</div>
+                  <div className="text-sm font-medium text-gray-300">Subject:</div>
+                  <div className="text-white">{previewEmail.subject || 'No subject'}</div>
                 </div>
                 
                 <div>
-                  <div className="text-sm font-medium text-gray-600">Body:</div>
-                  <div className="text-gray-900 whitespace-pre-wrap">
+                  <div className="text-sm font-medium text-gray-300">Body:</div>
+                  <div className="text-white whitespace-pre-wrap">
                     {previewEmail.body || 'No message body'}
                   </div>
                 </div>
                 
-                <div className="border-t pt-4">
-                  <div className="text-sm text-gray-600">
+                <div className="border-t pt-4" style={{ borderColor: '#384e77' }}>
+                  <div className="text-sm text-gray-300">
                     📎 Certificate.pdf (attachment)
                   </div>
                 </div>
               </div>
               
-              <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-                <p className="text-sm text-blue-800">
+              <div className="mt-4 p-3 rounded-lg" style={{ backgroundColor: '#683abe' }}>
+                <p className="text-sm text-white">
                   <strong>Note:</strong> Variables shown as [FIELD_NAME] will be replaced with actual data from your spreadsheet when sending.
                 </p>
               </div>

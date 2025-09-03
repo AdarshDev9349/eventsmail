@@ -268,13 +268,13 @@ export default function PreviewGenerator({
 
   if (currentStep === 'sending') {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-8">
+      <div className="rounded-2xl shadow-lg p-8" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
         <div className="text-center">
-          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#384e77' }}>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2" style={{ borderColor: '#b298dc' }}></div>
           </div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">Sending Certificates</h3>
-          <p className="text-gray-600">{sendStatus}</p>
+          <h3 className="text-xl font-semibold text-white mb-2">Sending Certificates</h3>
+          <p className="text-gray-300">{sendStatus}</p>
         </div>
         {/* Hidden canvas for certificate generation */}
         <canvas ref={canvasRef} className="hidden" />
@@ -284,28 +284,28 @@ export default function PreviewGenerator({
 
   if (currentStep === 'complete') {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-8">
+      <div className="rounded-2xl shadow-lg p-8" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#683abe' }}>
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">Certificates Sent!</h3>
-          <p className="text-gray-600">{sendStatus}</p>
+          <h3 className="text-xl font-semibold text-white mb-2">Certificates Sent!</h3>
+          <p className="text-gray-300">{sendStatus}</p>
         </div>
 
         {/* Detailed Results */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           {/* Successful Sends */}
           {sendResults.successful.length > 0 && (
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-              <h4 className="text-lg font-semibold text-green-800 mb-2">
+            <div className="border rounded-lg p-4" style={{ backgroundColor: '#683abe', borderColor: '#b298dc' }}>
+              <h4 className="text-lg font-semibold text-white mb-2">
                 ✅ Successfully Sent ({sendResults.successful.length})
               </h4>
               <div className="space-y-1 max-h-32 overflow-y-auto">
                 {sendResults.successful.map((email, index) => (
-                  <div key={index} className="text-sm text-green-700">{email}</div>
+                  <div key={index} className="text-sm text-gray-200">{email}</div>
                 ))}
               </div>
             </div>
@@ -313,15 +313,15 @@ export default function PreviewGenerator({
 
           {/* Failed Sends */}
           {sendResults.failed.length > 0 && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-              <h4 className="text-lg font-semibold text-red-800 mb-2">
+            <div className="border rounded-lg p-4" style={{ backgroundColor: '#384e77', borderColor: '#683abe' }}>
+              <h4 className="text-lg font-semibold text-white mb-2">
                 ❌ Failed to Send ({sendResults.failed.length})
               </h4>
               <div className="space-y-2 max-h-32 overflow-y-auto">
                 {sendResults.failed.map((item, index) => (
                   <div key={index} className="text-sm">
-                    <div className="text-red-700 font-medium">{item.email}</div>
-                    <div className="text-red-600 text-xs">{item.error}</div>
+                    <div className="text-red-200 font-medium">{item.email}</div>
+                    <div className="text-red-300 text-xs">{item.error}</div>
                   </div>
                 ))}
               </div>
@@ -332,7 +332,8 @@ export default function PreviewGenerator({
         <div className="text-center">
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
+            className="px-6 py-3 text-white rounded-xl font-semibold transition-all hover:scale-105"
+            style={{ background: 'linear-gradient(135deg, #683abe, #b298dc)' }}
           >
             Start New Project
           </button>
@@ -346,9 +347,9 @@ export default function PreviewGenerator({
   return (
     <div className="grid grid-cols-12 gap-6">
       {/* Participants List */}
-      <div className="col-span-4 bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-lg font-semibold mb-4">Participants Preview</h3>
-        <p className="text-sm text-gray-600 mb-4">
+      <div className="col-span-4 rounded-2xl shadow-lg p-6" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
+        <h3 className="text-lg font-semibold mb-4 text-white">Participants Preview</h3>
+        <p className="text-sm text-gray-300 mb-4">
           Click on any participant to preview their certificate and email
         </p>
         
@@ -362,22 +363,26 @@ export default function PreviewGenerator({
             return (
               <div
                 key={index}
-                className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+                className={`p-3 border rounded-xl cursor-pointer transition-all ${
                   selectedRowIndex === index
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-2 shadow-lg'
+                    : 'border hover:border-opacity-70'
                 }`}
+                style={{
+                  borderColor: selectedRowIndex === index ? '#683abe' : '#384e77',
+                  backgroundColor: selectedRowIndex === index ? '#384e77' : '#0d0630'
+                }}
                 onClick={() => setSelectedRowIndex(index)}
               >
-                <div className="font-medium text-gray-900">{name}</div>
-                <div className="text-sm text-gray-500">{email}</div>
+                <div className="font-medium text-white">{name}</div>
+                <div className="text-sm text-gray-300">{email}</div>
               </div>
             );
           })}
         </div>
         
-        <div className="mt-6 pt-6 border-t">
-          <div className="text-sm text-gray-600 space-y-1">
+        <div className="mt-6 pt-6 border-t" style={{ borderColor: '#384e77' }}>
+          <div className="text-sm text-gray-300 space-y-1">
             <div>Total Participants: {spreadsheetData.rows.length}</div>
             <div>Template Elements: {template.elements.length}</div>
           </div>
@@ -387,10 +392,10 @@ export default function PreviewGenerator({
       {/* Certificate & Email Preview */}
       <div className="col-span-8 space-y-6">
         {/* Certificate Preview */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-lg font-semibold mb-4">Certificate Preview</h3>
+        <div className="rounded-2xl shadow-lg p-6" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
+          <h3 className="text-lg font-semibold mb-4 text-white">Certificate Preview</h3>
           
-          <div className="relative bg-gray-100 rounded-lg overflow-hidden">
+          <div className="relative rounded-lg overflow-hidden" style={{ backgroundColor: '#384e77' }}>
             <div
               className="relative"
               style={{ aspectRatio: '4/3', height: '600px' }}
@@ -430,27 +435,27 @@ export default function PreviewGenerator({
         </div>
 
         {/* Email Preview */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-lg font-semibold mb-4">Email Preview</h3>
+        <div className="rounded-2xl shadow-lg p-6" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
+          <h3 className="text-lg font-semibold mb-4 text-white">Email Preview</h3>
           
-          <div className="bg-gray-50 rounded-lg p-4 space-y-4">
+          <div className="rounded-lg p-4 space-y-4" style={{ backgroundColor: '#384e77' }}>
             <div>
-              <div className="text-sm font-medium text-gray-600">To:</div>
-              <div className="text-gray-900">{previewEmail.to}</div>
+              <div className="text-sm font-medium text-gray-300">To:</div>
+              <div className="text-white">{previewEmail.to}</div>
             </div>
             
             <div>
-              <div className="text-sm font-medium text-gray-600">Subject:</div>
-              <div className="text-gray-900">{previewEmail.subject}</div>
+              <div className="text-sm font-medium text-gray-300">Subject:</div>
+              <div className="text-white">{previewEmail.subject}</div>
             </div>
             
             <div>
-              <div className="text-sm font-medium text-gray-600">Message:</div>
-              <div className="text-gray-900 whitespace-pre-wrap">{previewEmail.body}</div>
+              <div className="text-sm font-medium text-gray-300">Message:</div>
+              <div className="text-white whitespace-pre-wrap">{previewEmail.body}</div>
             </div>
             
-            <div className="border-t pt-4">
-              <div className="text-sm text-gray-600">
+            <div className="border-t pt-4" style={{ borderColor: '#0d0630' }}>
+              <div className="text-sm text-gray-300">
                 📎 Certificate.pdf (will be attached)
               </div>
             </div>
@@ -458,18 +463,21 @@ export default function PreviewGenerator({
         </div>
 
         {/* Send Certificates */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
+        <div className="rounded-2xl shadow-lg p-6" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
           <div className="flex justify-between items-center">
             <div>
-              <h3 className="text-lg font-semibold">Ready to Send?</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg font-semibold text-white">Ready to Send?</h3>
+              <p className="text-gray-300">
                 This will send personalized certificates to all {spreadsheetData.rows.length} participants
               </p>
             </div>
             <button
               onClick={sendCertificates}
               disabled={sending}
-              className="px-6 py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white rounded-lg font-semibold transition-colors"
+              className="px-6 py-3 rounded-xl font-semibold transition-all text-white hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{ 
+                background: sending ? '#384e77' : 'linear-gradient(135deg, #683abe, #b298dc)'
+              }}
             >
               Send All Certificates
             </button>

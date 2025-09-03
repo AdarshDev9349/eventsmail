@@ -68,11 +68,25 @@ export default function CertificateBuilder() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ 
+      background: 'linear-gradient(135deg, #0d0630, #18314f)',
+      minHeight: '100vh',
+      position: 'relative'
+    }}>
+      {/* Full-screen background overlay to prevent white overflow */}
+      <div 
+        className="fixed inset-0 -z-10"
+        style={{ 
+          background: 'linear-gradient(135deg, #0d0630 0%, #18314f 50%, #384e77 100%)',
+          minHeight: '100vh',
+          width: '100vw'
+        }}
+      />
+      
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="border-b relative z-10" style={{ backgroundColor: '#18314f', borderColor: '#384e77' }}>
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <h1 className="text-2xl font-bold text-gray-900">Certificate Builder</h1>
+          <h1 className="text-2xl font-bold text-white">Certificate Builder</h1>
           
           {/* Progress Steps */}
           <div className="mt-4">
@@ -82,11 +96,18 @@ export default function CertificateBuilder() {
                   <div
                     className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
                       currentStep === step.id
-                        ? 'bg-blue-600 text-white'
+                        ? 'text-white'
                         : step.completed
-                        ? 'bg-green-600 text-white'
-                        : 'bg-gray-300 text-gray-600'
+                        ? 'text-white'
+                        : 'text-gray-400'
                     }`}
+                    style={{
+                      backgroundColor: currentStep === step.id
+                        ? '#683abe'
+                        : step.completed
+                        ? '#b298dc'
+                        : '#384e77'
+                    }}
                   >
                     {step.completed ? (
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -97,12 +118,12 @@ export default function CertificateBuilder() {
                     )}
                   </div>
                   <span className={`ml-2 text-sm font-medium ${
-                    currentStep === step.id ? 'text-blue-600' : 'text-gray-500'
+                    currentStep === step.id ? 'text-white' : 'text-gray-300'
                   }`}>
                     {step.name}
                   </span>
                   {index < steps.length - 1 && (
-                    <div className="mx-4 h-px w-8 bg-gray-300" />
+                    <div className="mx-4 h-px w-8" style={{ backgroundColor: '#384e77' }} />
                   )}
                 </div>
               ))}
@@ -112,7 +133,7 @@ export default function CertificateBuilder() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-6">
+      <div className="max-w-7xl mx-auto px-4 py-6 relative z-10">
         {currentStep === 'import' && (
           <SpreadsheetImporter onDataImported={handleSpreadsheetImport} />
         )}
