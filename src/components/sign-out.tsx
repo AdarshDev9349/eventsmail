@@ -11,7 +11,7 @@ export default function SignOut() {
 		>
 			<button
 				type="submit"
-				className="flex items-center justify-center gap-2 text-white font-semibold py-2 px-4 rounded-xl shadow transition-all duration-200 hover:scale-105"
+				className="flex items-center text-white justify-center gap-2 px-2 py-2 md:py-3 md:px-4 rounded-xl shadow transition-all duration-200 hover:scale-105"
 				style={{ background: 'linear-gradient(135deg, #683abe, #b298dc)' }}
 			>
 				<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

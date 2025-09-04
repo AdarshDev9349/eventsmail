@@ -122,10 +122,10 @@ export default function SpreadsheetImporter({ onDataImported }: SpreadsheetImpor
   }
 
   return (
-    <div className="rounded-2xl shadow-lg p-8" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-white mb-2">Import Spreadsheet Data</h2>
-        <p className="text-gray-300">
+    <div className="rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
+      <div className="mb-4 sm:mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Import Spreadsheet Data</h2>
+        <p className="text-sm sm:text-base text-gray-300">
           Select a Google Spreadsheet containing participant data (names, emails, etc.)
         </p>
       </div>
@@ -141,17 +141,17 @@ export default function SpreadsheetImporter({ onDataImported }: SpreadsheetImpor
           <p className="text-sm text-gray-400">Create a spreadsheet in Google Sheets to get started</p>
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {/* Sticky Continue Button - Fixed at top for better UX */}
           {selectedSpreadsheet && (
-            <div className="sticky top-4 z-10 flex justify-center mb-6">
+            <div className="sticky top-2 sm:top-4 z-10 flex justify-center mb-4 sm:mb-6">
               <button
                 onClick={importSpreadsheet}
                 disabled={importing}
-                className="group relative px-8 py-4 rounded-2xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+                className="group relative px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base"
                 style={{ background: 'linear-gradient(135deg, #683abe, #b298dc)', color: 'white' }}
               >
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 {importing ? (
                   <div className="flex items-center space-x-2">
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
@@ -166,68 +166,66 @@ export default function SpreadsheetImporter({ onDataImported }: SpreadsheetImpor
 
           {/* Spreadsheet List Container with proper scrolling */}
           <div 
-            className="relative rounded-xl p-4 max-h-96 overflow-y-auto"
+            className="relative rounded-xl p-3 sm:p-4 max-h-80 sm:max-h-96 overflow-y-auto"
             style={{ 
               backgroundColor: 'rgba(13, 6, 48, 0.3)',
               borderColor: '#384e77',
               border: '1px solid'
             }}
           >
-            <div className="grid gap-4">
+            <div className="grid gap-3 sm:gap-4">
               {spreadsheets.map((sheet) => (
-              <div
-                key={sheet.id}
-                className={`border rounded-xl p-4 cursor-pointer transition-all ${
-                  selectedSpreadsheet === sheet.id
-                    ? 'border-2 shadow-lg'
-                    : 'border hover:border-opacity-70'
-                }`}
-                style={{
-                  borderColor: selectedSpreadsheet === sheet.id ? '#683abe' : '#384e77',
-                  backgroundColor: selectedSpreadsheet === sheet.id ? '#384e77' : '#18314f'
-                }}
-                onClick={() => setSelectedSpreadsheet(sheet.id)}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                      selectedSpreadsheet === sheet.id
-                        ? 'border-2'
-                        : 'border-gray-400'
-                    }`}
-                    style={{
-                      borderColor: selectedSpreadsheet === sheet.id ? '#b298dc' : '#384e77',
-                      backgroundColor: selectedSpreadsheet === sheet.id ? '#b298dc' : 'transparent'
-                    }}>
-                      {selectedSpreadsheet === sheet.id && (
-                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      )}
+                <div
+                  key={sheet.id}
+                  className={`border rounded-lg sm:rounded-xl p-3 sm:p-4 cursor-pointer transition-all ${
+                    selectedSpreadsheet === sheet.id
+                      ? 'border-2 shadow-lg'
+                      : 'border hover:border-opacity-70'
+                  }`}
+                  style={{
+                    borderColor: selectedSpreadsheet === sheet.id ? '#683abe' : '#384e77',
+                    backgroundColor: selectedSpreadsheet === sheet.id ? '#384e77' : '#18314f'
+                  }}
+                  onClick={() => setSelectedSpreadsheet(sheet.id)}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3 min-w-0 flex-1">
+                      <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+                        selectedSpreadsheet === sheet.id
+                          ? 'border-2'
+                          : 'border-gray-400'
+                      }`}
+                      style={{
+                        borderColor: selectedSpreadsheet === sheet.id ? '#b298dc' : '#384e77',
+                        backgroundColor: selectedSpreadsheet === sheet.id ? '#b298dc' : 'transparent'
+                      }}>
+                        {selectedSpreadsheet === sheet.id && (
+                          <svg className="w-2 h-2 sm:w-3 sm:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        )}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-medium text-white text-sm sm:text-base truncate">{sheet.name}</h3>
+                        <p className="text-xs sm:text-sm text-gray-300 truncate">
+                          Modified: {formatDate(sheet.modifiedTime)}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-medium text-white">{sheet.name}</h3>
-                      <p className="text-sm text-gray-300">
-                        Modified: {formatDate(sheet.modifiedTime)}
-                      </p>
-                    </div>
+                    <a
+                      href={sheet.webViewLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs sm:text-sm font-medium px-2 sm:px-3 py-1 rounded-lg transition-colors flex-shrink-0 ml-2"
+                      style={{ color: '#b298dc', backgroundColor: '#0d0630' }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      View →
+                    </a>
                   </div>
-                  <a
-                    href={sheet.webViewLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm font-medium px-3 py-1 rounded-lg transition-colors"
-                    style={{ color: '#b298dc', backgroundColor: '#0d0630' }}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    View →
-                  </a>
                 </div>
-              </div>
-            ))}
-            </div>
-            
-            {/* Scroll fade indicator */}
+              ))}
+            </div>            {/* Scroll fade indicator */}
             {spreadsheets.length > 4 && (
               <div 
                 className="absolute bottom-0 left-0 right-0 h-8 pointer-events-none rounded-b-xl"
