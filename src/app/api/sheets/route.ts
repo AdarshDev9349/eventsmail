@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
       success: true,
       data,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to fetch spreadsheet data' },
       { status: 500 }
@@ -106,7 +106,7 @@ export async function POST(request: NextRequest) {
       success: true,
       data: result,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to perform sheets operation' },
       { status: 500 }

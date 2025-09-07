@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
-import { gmailApi } from '@/lib/google-api';
 
 export async function POST(request: NextRequest) {
   try {
@@ -63,8 +62,6 @@ export async function POST(request: NextRequest) {
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      
       // Check if it's an API not enabled error
       if (response.status === 403) {
         return NextResponse.json({ 
@@ -83,7 +80,7 @@ export async function POST(request: NextRequest) {
       messageId: result.id,
     });
     
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to send certificate' },
       { status: 500 }

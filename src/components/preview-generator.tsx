@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 
 interface SpreadsheetData {
   headers: string[];
-  rows: any[][];
+  rows: string[][];
   fileName: string;
 }
 
@@ -131,7 +131,7 @@ export default function PreviewGenerator({
         }
       };
       
-      img.onerror = (error) => {
+      img.onerror = () => {
         reject(new Error('Failed to load background image'));
       };
       

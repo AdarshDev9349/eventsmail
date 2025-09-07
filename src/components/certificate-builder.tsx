@@ -8,7 +8,7 @@ import PreviewGenerator from './preview-generator';
 
 interface SpreadsheetData {
   headers: string[];
-  rows: any[][];
+  rows: string[][];
   fileName: string;
 }
 

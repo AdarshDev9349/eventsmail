@@ -28,7 +28,6 @@ export async function googleApiRequest(url: string, options: RequestInit = {}) {
   });
 
   if (!response.ok) {
-    const errorText = await response.text();
     throw new Error(`Google API request failed: ${response.status} ${response.statusText}`);
   }
 
@@ -106,7 +105,7 @@ export const sheetsApi = {
   },
 
   // Update spreadsheet data
-  async updateSpreadsheet(spreadsheetId: string, range: string, values: any[][]) {
+  async updateSpreadsheet(spreadsheetId: string, range: string, values: string[][]) {
     return googleApiRequest(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}`, {
       method: 'PUT',
       body: JSON.stringify({
@@ -119,7 +118,7 @@ export const sheetsApi = {
   },
 
   // Append data to spreadsheet
-  async appendToSpreadsheet(spreadsheetId: string, range: string, values: any[][]) {
+  async appendToSpreadsheet(spreadsheetId: string, range: string, values: string[][]) {
     return googleApiRequest(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=RAW`, {
       method: 'POST',
       body: JSON.stringify({
