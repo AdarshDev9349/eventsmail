@@ -3,8 +3,23 @@
 import { useState, useEffect } from 'react';
 
 export default function CertificateDemo() {
-    const [currentView, setCurrentView] = useState(1); // 0 for certificate, 1 for ticket
+    const [currentView, setCurrentView] = useState(0); // 0 for certificate, 1 for ticket
     const [isVisible, setIsVisible] = useState(true);
+
+    // Add mobile styles
+    useEffect(() => {
+        const style = document.createElement('style');
+        style.textContent = `
+            @media (max-width: 640px) {
+                .mobile-text-xs { font-size: 6px !important; }
+                .mobile-text-sm { font-size: 8px !important; }
+            }
+        `;
+        document.head.appendChild(style);
+        return () => {
+            document.head.removeChild(style);
+        };
+    }, []);
 
     // Static QR code pattern to avoid hydration mismatch
     const qrPattern = [1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0];
@@ -118,15 +133,15 @@ export default function CertificateDemo() {
                             <div>
                                 <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3 mb-1 sm:mb-2">
                                     <div className="w-2 h-2 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-6 lg:h-6 rounded flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #683abe, #b298dc)' }}>
-                                        <span className="text-white font-bold text-xs">M</span>
+                                        <span className="text-white font-bold text-xs sm:text-xs md:text-sm mobile-text-xs">M</span>
                                     </div>
-                                    <span className="text-gray-300 text-xs font-medium">MAILCRAFT PRO</span>
+                                    <span className="text-gray-300 font-medium text-xs sm:text-xs md:text-sm mobile-text-xs">MAILCRAFT PRO</span>
                                 </div>
                                 <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3 mb-1 sm:mb-2 md:mb-3">
                                     <div className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-8 lg:h-8 rounded flex items-center justify-center border" style={{ borderColor: '#b298dc', backgroundColor: 'rgba(178, 152, 220, 0.1)' }}>
-                                        <span className="text-white font-bold text-xs">E</span>
+                                        <span className="text-white font-bold text-xs sm:text-xs md:text-sm mobile-text-xs">E</span>
                                     </div>
-                                    <span className="text-gray-200 text-xs font-medium">EVENT ORGANIZER</span>
+                                    <span className="text-gray-200 font-medium text-xs sm:text-xs md:text-sm mobile-text-xs">EVENT ORGANIZER</span>
                                 </div>
                             </div>
                         </div>
@@ -147,17 +162,17 @@ export default function CertificateDemo() {
                         {/* Event Details */}
                         <div className="grid grid-cols-2 gap-1 sm:gap-2 md:gap-3 text-xs">
                             <div>
-                                <p className="text-purple-300 uppercase tracking-wide text-xs">Date</p>
-                                <p className="text-white font-medium text-xs">23/08/2025</p>
+                                <p className="text-purple-300 uppercase tracking-wide text-xs mobile-text-xs">Date</p>
+                                <p className="text-white font-medium text-xs mobile-text-xs">23/08/2025</p>
                             </div>
                             <div>
-                                <p className="text-purple-300 uppercase tracking-wide text-xs">Time</p>
-                                <p className="text-white font-medium text-xs">Start: 10 am</p>
+                                <p className="text-purple-300 uppercase tracking-wide text-xs mobile-text-xs">Time</p>
+                                <p className="text-white font-medium text-xs mobile-text-xs">Start: 10 am</p>
                             </div>
                             <div className="col-span-2">
-                                <p className="text-purple-300 uppercase tracking-wide text-xs">Venue</p>
-                                <p className="text-white font-medium text-xs">Innovation Convention Center</p>
-                                <p className="text-gray-300 text-xs">Downtown Tech District</p>
+                                <p className="text-purple-300 uppercase tracking-wide text-xs mobile-text-xs">Venue</p>
+                                <p className="text-white font-medium text-xs mobile-text-xs">Innovation Convention Center</p>
+                                <p className="text-gray-300 text-xs mobile-text-xs">Downtown Tech District</p>
                             </div>
                         </div>
                     </div>
@@ -169,11 +184,11 @@ export default function CertificateDemo() {
                     <div className="w-12 sm:w-16 md:w-20 lg:w-36 flex flex-col justify-between py-0.5 sm:py-1">
                         {/* Attendee info */}
                         <div>
-                            <p className="text-purple-300 uppercase tracking-wide text-xs mb-0.5 sm:mb-1">Delegate Name:</p>
-                            <p className="text-white font-bold text-xs mb-1 sm:mb-2 md:mb-3">{`{name}`}</p>
+                            <p className="text-purple-300 uppercase tracking-wide text-xs mb-0.5 sm:mb-1 mobile-text-xs">Delegate Name:</p>
+                            <p className="text-white font-bold text-xs mb-1 sm:mb-2 md:mb-3 mobile-text-xs">{`{name}`}</p>
                             
-                            <p className="text-purple-300 uppercase tracking-wide text-xs mb-0.5 sm:mb-1">Team Name:</p>
-                            <p className="text-white font-medium text-xs mb-1 sm:mb-3 md:mb-4">{`{TeamName}`}</p>
+                            <p className="text-purple-300 uppercase tracking-wide text-xs mb-0.5 sm:mb-1 mobile-text-xs">Team Name:</p>
+                            <p className="text-white font-medium text-xs mb-1 sm:mb-3 md:mb-4 mobile-text-xs">{`{TeamName}`}</p>
                         </div>
                         
                         {/* QR Code and Date */}
@@ -187,8 +202,8 @@ export default function CertificateDemo() {
                             </div>
                             
                             <div className="border-t pt-0.5 sm:pt-1 md:pt-2" style={{ borderColor: 'rgba(178, 152, 220, 0.4)' }}>
-                                <p className="text-white font-bold text-xs">23 August 2025</p>
-                                <p className="text-purple-300 text-xs">Start: 10 am</p>
+                                <p className="text-white font-bold text-xs mobile-text-xs">23 August 2025</p>
+                                <p className="text-purple-300 text-xs mobile-text-xs">Start: 10 am</p>
                             </div>
                         </div>
                     </div>

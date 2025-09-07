@@ -392,44 +392,69 @@ export default function PreviewGenerator({
       {/* Certificate & Email Preview */}
       <div className="lg:col-span-8 space-y-4 lg:space-y-6 order-1 lg:order-2">
         {/* Certificate Preview */}
-        <div className="rounded-xl lg:rounded-2xl shadow-lg p-4 lg:p-6" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
-          <h3 className="text-base lg:text-lg font-semibold mb-3 lg:mb-4 text-white">Certificate Preview</h3>
-          
-          <div className="relative rounded-lg overflow-hidden" style={{ backgroundColor: '#384e77' }}>
-            <div
-              className="relative"
-              style={{ 
-                aspectRatio: '4/3', 
-                height: window.innerWidth < 1024 ? '300px' : '600px'
-              }}
-            >
-              {/* Background Image */}
-              <img
-                src={template.backgroundImage}
-                alt="Certificate background"
-                className="absolute inset-0 w-full h-full object-contain"
-              />
-              
-              {/* Template Elements */}
-              {template.elements.map((element) => (
+        <div className="rounded-xl lg:rounded-2xl shadow-lg" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
+          <div className="rounded-3xl border shadow-2xl overflow-hidden backdrop-blur-sm" style={{ backgroundColor: 'rgba(24, 49, 79, 0.8)', borderColor: 'rgba(179, 152, 220, 0.4)' }}>
+            {/* Header */}
+            <div className="flex items-center justify-between px-4 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 border-b" style={{ backgroundColor: 'rgba(13, 6, 48, 0.9)', borderColor: 'rgba(179, 152, 220, 0.3)' }}>
+              <div className="flex items-center space-x-3 sm:space-x-4">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #683abe, #b298dc)' }}>
+                  <span className="text-white font-bold text-sm sm:text-base">C</span>
+                </div>
+                <span className="text-white font-semibold text-sm sm:text-base md:text-lg">
+                  Certificate Preview
+                </span>
+              </div>
+              <div className="flex items-center space-x-2 sm:space-x-3 text-xs sm:text-sm text-gray-300">
+                <span className="hidden sm:inline">Live Preview</span>
+                <span className="sm:hidden">Live</span>
+                <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-400 animate-pulse"></div>
+              </div>
+            </div>
+
+            {/* Content with certificate preview */}
+            <div className="p-2 sm:p-4 md:p-8 lg:p-12">
+              <div className="relative max-w-4xl mx-auto">
                 <div
-                  key={element.id}
-                  className="absolute"
-                  style={{
-                    left: element.x * (window.innerWidth < 1024 ? 0.5 : 1),
-                    top: element.y * (window.innerWidth < 1024 ? 0.5 : 1),
-                    width: element.width * (window.innerWidth < 1024 ? 0.5 : 1),
-                    height: element.height * (window.innerWidth < 1024 ? 0.5 : 1),
-                    fontSize: (element.fontSize || 16) * (window.innerWidth < 1024 ? 0.5 : 1),
-                    fontFamily: element.fontFamily,
-                    color: element.color,
+                  className="relative rounded-lg overflow-hidden"
+                  style={{ 
+                    aspectRatio: '4/3',
+                    backgroundColor: '#384e77',
+                    transform: 'scale(0.75)', // Scale down to fit better
+                    transformOrigin: 'center'
                   }}
                 >
-                  {element.isVariable && element.variableName
-                    ? rowData[element.variableName] || element.content
-                    : element.content}
+                  {/* Background Image */}
+                  <img
+                    src={template.backgroundImage}
+                    alt="Certificate background"
+                    className="absolute inset-0 w-full h-full object-contain"
+                  />
+                  
+                  {/* Template Elements */}
+                  {template.elements.map((element) => (
+                    <div
+                      key={element.id}
+                      className="absolute"
+                      style={{
+                        left: `${(element.x / 800) * 100}%`,
+                        top: `${(element.y / 600) * 100}%`,
+                        width: `${(element.width / 800) * 100}%`,
+                        height: `${(element.height / 600) * 100}%`,
+                        fontSize: `${(element.fontSize || 16) * 0.75}px`,
+                        fontFamily: element.fontFamily,
+                        color: element.color,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      {element.isVariable && element.variableName
+                        ? rowData[element.variableName] || element.content
+                        : element.content}
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </div>
           

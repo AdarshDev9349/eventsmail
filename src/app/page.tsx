@@ -20,10 +20,10 @@ export default async function Home() {
             </svg>
           </div>
           <h1 className="text-4xl font-bold text-white mb-3">
-            Certificate Builder
+            MailCraft Pro
           </h1>
           <p className="text-gray-300 text-lg">
-            Create and send personalized certificates with ease
+            Send event tickets and certificates effortlessly from your Gmail
           </p>
         </div>
         <div className="rounded-3xl backdrop-blur-xl border p-8" style={{ backgroundColor: 'rgba(56, 78, 119, 0.15)', borderColor: 'rgba(179, 152, 220, 0.3)' }}>
