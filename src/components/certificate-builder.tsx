@@ -86,7 +86,7 @@ export default function CertificateBuilder() {
       {/* Header */}
       <div className="border-b relative z-10" style={{ backgroundColor: '#18314f', borderColor: '#384e77' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <h1 className="text-xl sm:text-2xl font-bold text-white">Certificate Builder</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-white">EventsMail</h1>
           
           {/* Progress Steps */}
           <div className="mt-4">

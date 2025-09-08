@@ -12,7 +12,7 @@ export default function SignIn() {
         </svg>
       </div>
       
-      <h1 className="text-2xl font-bold mb-2 text-center text-white">Welcome to MailCraft Pro</h1>
+      <h1 className="text-2xl font-bold mb-2 text-center text-white">Welcome to EventsMail</h1>
       <p className="text-gray-300 mb-8 text-center">
         Sign in to start sending event tickets and certificates from your Gmail
       </p>
@@ -66,7 +66,7 @@ export default function SignIn() {
       </form>
       
       <p className="text-xs text-gray-400 mt-6 text-center">
-        By signing in, you allow MailCraft Pro to access your Gmail and Google Sheets
+        By signing in, you allow EventsMail to access your Gmail and Google Sheets
         to help you send event tickets and certificates efficiently.
       </p>
     </div>

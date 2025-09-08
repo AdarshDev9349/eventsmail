@@ -1,4 +1,4 @@
-# Hackmail - Secure Email Dashboard
+# EventsMail - Event Helper for Tickets & Certificates
 
 A secure email management platform built with Next.js, featuring Google OAuth authentication and protected routes.
 

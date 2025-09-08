@@ -135,7 +135,7 @@ export default function CertificateDemo() {
                                     <div className="w-2 h-2 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-6 lg:h-6 rounded flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #683abe, #b298dc)' }}>
                                         <span className="text-white font-bold text-xs sm:text-xs md:text-sm mobile-text-xs">M</span>
                                     </div>
-                                    <span className="text-gray-300 font-medium text-xs sm:text-xs md:text-sm mobile-text-xs">MAILCRAFT PRO</span>
+                                    <span className="text-gray-300 font-medium text-xs sm:text-xs md:text-sm mobile-text-xs">EVENTSMAIL</span>
                                 </div>
                                 <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3 mb-1 sm:mb-2 md:mb-3">
                                     <div className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-8 lg:h-8 rounded flex items-center justify-center border" style={{ borderColor: '#b298dc', backgroundColor: 'rgba(178, 152, 220, 0.1)' }}>

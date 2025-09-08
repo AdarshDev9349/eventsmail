@@ -23,7 +23,7 @@ export default async function Dashboard() {
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shadow-lg" style={{ background: 'linear-gradient(135deg, #683abe, #b298dc)' }}>
                   <span className="text-white font-bold text-sm sm:text-base">C</span>
                 </div>
-                <span className="text-white font-semibold text-lg sm:text-xl">MailCraft Pro</span>
+                <span className="text-white font-semibold text-lg sm:text-xl">EventsMail</span>
               </div>
               
               <div className="hidden lg:flex items-center space-x-8">

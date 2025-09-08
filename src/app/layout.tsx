@@ -13,10 +13,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Certificate Builder - Create & Send Personalized Certificates",
-  description: "Build custom certificates with drag-and-drop templates and send them via email",
-  keywords: ["certificate", "builder", "email", "templates", "google", "sheets"],
-  authors: [{ name: "Certificate Builder" }],
+  title: "EventsMail - Event Helper for Tickets & Certificates",
+  description: "Send personalized event tickets and certificates via Gmail using Google Sheets data. Perfect for hackathons, conferences, and events.",
+  keywords: ["event", "tickets", "certificates", "email", "gmail", "google sheets", "hackathon", "conference", "automation"],
+  authors: [{ name: "EventsMail Team" }],
 };
 
 export const viewport: Viewport = {
