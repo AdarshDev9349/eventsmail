@@ -20,6 +20,8 @@ interface TemplateElement {
 interface Template {
   backgroundImage: string;
   elements: TemplateElement[];
+  canvasWidth?: number;  // Store the canvas width used during design
+  canvasHeight?: number; // Store the canvas height used during design
 }
 
 interface TemplateDesignerProps {
@@ -422,7 +424,7 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
                         ? 'border-blue-500 bg-blue-50 bg-opacity-20 cursor-move touch-manipulation' 
                         : 'border-transparent hover:border-gray-400 cursor-move touch-manipulation'
                     } ${draggedElement === element.id ? 'opacity-70' : ''} ${
-                      window.innerWidth < 1024 ? 'min-h-[44px] min-w-[44px] flex items-center justify-center' : ''
+                      window.innerWidth < 1024 ? 'min-h-[44px] min-w-[44px]' : ''
                     }`}
                     style={{
                       left: element.x,
@@ -467,7 +469,20 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
                 </button>
                 
                 <button
-                  onClick={() => onTemplateComplete(template)}
+                  onClick={() => {
+                    // Calculate current canvas dimensions
+                    const canvasWidth = window.innerWidth < 640 ? 320 : window.innerWidth < 1024 ? 426.67 : 800;
+                    const canvasHeight = window.innerWidth < 640 ? 240 : window.innerWidth < 1024 ? 320 : 600;
+                    
+                    // Include canvas dimensions in the template
+                    const templateWithDimensions = {
+                      ...template,
+                      canvasWidth,
+                      canvasHeight
+                    };
+                    
+                    onTemplateComplete(templateWithDimensions);
+                  }}
                   disabled={template.elements.length === 0}
                   className={`w-full sm:w-auto px-4 lg:px-6 py-2 lg:py-3 rounded-lg lg:rounded-xl font-semibold transition-all text-sm lg:text-base ${
                     template.elements.length > 0

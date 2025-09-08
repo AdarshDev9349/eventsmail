@@ -26,6 +26,8 @@ interface TemplateElement {
 interface Template {
   backgroundImage: string;
   elements: TemplateElement[];
+  canvasWidth?: number;  // Store the canvas width used during design
+  canvasHeight?: number; // Store the canvas height used during design
 }
 
 interface EmailTemplate {
@@ -100,13 +102,13 @@ export default function PreviewGenerator({
           // Draw background image
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-          // Calculate scaling factors based on current device canvas dimensions
-          // Use the same responsive canvas dimensions as the template designer and preview
-          const currentCanvasWidth = window.innerWidth < 640 ? 320 : window.innerWidth < 1024 ? 426.67 : 800;
-          const currentCanvasHeight = window.innerWidth < 640 ? 240 : window.innerWidth < 1024 ? 320 : 600;
+          // Calculate scaling factors based on stored canvas dimensions from template creation
+          // Use stored dimensions if available, otherwise fall back to desktop defaults for backward compatibility
+          const designerCanvasWidth = template.canvasWidth || 800; // Default to desktop size for existing templates
+          const designerCanvasHeight = template.canvasHeight || 600; // Default to desktop size for existing templates
           
-          const scaleX = canvas.width / currentCanvasWidth;
-          const scaleY = canvas.height / currentCanvasHeight;
+          const scaleX = canvas.width / designerCanvasWidth;
+          const scaleY = canvas.height / designerCanvasHeight;
 
           // Draw template elements with proper scaling
           template.elements.forEach((element) => {
@@ -447,18 +449,15 @@ export default function PreviewGenerator({
                       key={element.id}
                       className="absolute"
                       style={{
-                        left: `${(element.x / (window.innerWidth < 640 ? 320 : window.innerWidth < 1024 ? 426.67 : 800)) * 100}%`,
-                        top: `${(element.y / (window.innerWidth < 640 ? 240 : window.innerWidth < 1024 ? 320 : 600)) * 100}%`,
-                        width: `${(element.width / (window.innerWidth < 640 ? 320 : window.innerWidth < 1024 ? 426.67 : 800)) * 100}%`,
-                        height: `${(element.height / (window.innerWidth < 640 ? 240 : window.innerWidth < 1024 ? 320 : 600)) * 100}%`,
+                        left: `${(element.x / (template.canvasWidth || 800)) * 100}%`,
+                        top: `${(element.y / (template.canvasHeight || 600)) * 100}%`,
+                        width: `${(element.width / (template.canvasWidth || 800)) * 100}%`,
+                        height: `${(element.height / (template.canvasHeight || 600)) * 100}%`,
                         fontSize: window.innerWidth < 640 ? `${((element.fontSize || 16) * 0.7) * 0.9}px` : 
                                  window.innerWidth < 1024 ? `${((element.fontSize || 16) * 0.8) * 0.8}px` : 
                                  `${(element.fontSize || 16) * 0.75}px`,
                         fontFamily: element.fontFamily,
                         color: element.color,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
                       }}
                     >
                       {element.isVariable && element.variableName
