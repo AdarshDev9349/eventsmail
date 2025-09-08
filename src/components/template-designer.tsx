@@ -157,6 +157,27 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
     setSelectedElement(elementId);
   }, [template.elements]);
 
+  // Touch event handlers for mobile drag functionality
+  const handleElementTouchStart = useCallback((event: React.TouchEvent, elementId: string) => {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const element = template.elements.find(el => el.id === elementId);
+    if (!element) return;
+    
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const touch = event.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    const offsetX = touch.clientX - rect.left - element.x;
+    const offsetY = touch.clientY - rect.top - element.y;
+    
+    setDraggedElement(elementId);
+    setDragOffset({ x: offsetX, y: offsetY });
+    setSelectedElement(elementId);
+  }, [template.elements]);
+
   const handleCanvasMouseMove = useCallback((event: React.MouseEvent) => {
     if (!draggedElement) return;
     
@@ -180,7 +201,39 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
     }
   }, [draggedElement, dragOffset, updateElement, template.elements]);
 
+  // Touch move handler for mobile
+  const handleCanvasTouchMove = useCallback((event: React.TouchEvent) => {
+    if (!draggedElement) return;
+    
+    event.preventDefault();
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const touch = event.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    const newX = touch.clientX - rect.left - dragOffset.x;
+    const newY = touch.clientY - rect.top - dragOffset.y;
+    
+    // Constrain to canvas bounds
+    const canvasWidth = rect.width;
+    const canvasHeight = rect.height;
+    const element = template.elements.find(el => el.id === draggedElement);
+    
+    if (element) {
+      const constrainedX = Math.max(0, Math.min(newX, canvasWidth - element.width));
+      const constrainedY = Math.max(0, Math.min(newY, canvasHeight - element.height));
+      
+      updateElement(draggedElement, { x: constrainedX, y: constrainedY });
+    }
+  }, [draggedElement, dragOffset, updateElement, template.elements]);
+
   const handleCanvasMouseUp = useCallback(() => {
+    setDraggedElement(null);
+    setDragOffset({ x: 0, y: 0 });
+  }, []);
+
+  // Touch end handler for mobile
+  const handleCanvasTouchEnd = useCallback(() => {
     setDraggedElement(null);
     setDragOffset({ x: 0, y: 0 });
   }, []);
@@ -190,7 +243,7 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
     : null;
 
   return (
-    <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-6 min-h-screen p-2 sm:p-4">
+    <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-6 min-h-screen p-2 sm:p-4 w-full max-w-7xl mx-auto overflow-hidden">
       {/* Sidebar */}
       <div className="lg:col-span-3 rounded-xl lg:rounded-2xl shadow-lg p-4 lg:p-6 order-2 lg:order-1" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
         <div className="mb-4 lg:mb-6">
@@ -305,7 +358,7 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
       </div>
 
       {/* Main Canvas Area */}
-      <div className="lg:col-span-9 rounded-xl lg:rounded-2xl shadow-lg p-3 lg:p-6 order-1 lg:order-2" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
+      <div className="lg:col-span-9 rounded-xl lg:rounded-2xl shadow-lg p-3 lg:p-6 order-1 lg:order-2 w-full overflow-hidden" style={{ background: 'linear-gradient(135deg, #18314f, #0d0630)' }}>
         <div className="mb-4 lg:mb-6">
           <h3 className="text-base lg:text-lg font-semibold mb-3 lg:mb-4 text-white">Certificate Template Designer</h3>
           
@@ -340,7 +393,8 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
                 className="relative bg-gray-100 border border-gray-300 rounded-lg overflow-hidden"
                 style={{ 
                   aspectRatio: '4/3', 
-                  height: window.innerWidth < 1024 ? '300px' : '600px',
+                  height: window.innerWidth < 640 ? '240px' : window.innerWidth < 1024 ? '320px' : '600px',
+                  maxWidth: '100%',
                   cursor: draggedHeader ? 'crosshair' : 'default'
                 }}
                 onClick={handleCanvasClick}
@@ -349,6 +403,8 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
                 onMouseMove={handleCanvasMouseMove}
                 onMouseUp={handleCanvasMouseUp}
                 onMouseLeave={handleCanvasMouseUp}
+                onTouchMove={handleCanvasTouchMove}
+                onTouchEnd={handleCanvasTouchEnd}
               >
                 {/* Background Image */}
                 <img
@@ -363,15 +419,18 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
                     key={element.id}
                     className={`absolute border-2 select-none ${
                       selectedElement === element.id 
-                        ? 'border-blue-500 bg-blue-50 bg-opacity-20 cursor-move' 
-                        : 'border-transparent hover:border-gray-400 cursor-move'
-                    } ${draggedElement === element.id ? 'opacity-70' : ''}`}
+                        ? 'border-blue-500 bg-blue-50 bg-opacity-20 cursor-move touch-manipulation' 
+                        : 'border-transparent hover:border-gray-400 cursor-move touch-manipulation'
+                    } ${draggedElement === element.id ? 'opacity-70' : ''} ${
+                      window.innerWidth < 1024 ? 'min-h-[44px] min-w-[44px] flex items-center justify-center' : ''
+                    }`}
                     style={{
                       left: element.x,
                       top: element.y,
-                      width: element.width,
-                      height: element.height,
-                      fontSize: window.innerWidth < 1024 ? Math.max(12, (element.fontSize || 16) * 0.8) : element.fontSize,
+                      width: window.innerWidth < 1024 ? Math.max(element.width, 44) : element.width,
+                      height: window.innerWidth < 1024 ? Math.max(element.height, 44) : element.height,
+                      fontSize: window.innerWidth < 640 ? Math.max(10, (element.fontSize || 16) * 0.7) : 
+                               window.innerWidth < 1024 ? Math.max(12, (element.fontSize || 16) * 0.8) : element.fontSize,
                       fontFamily: element.fontFamily,
                       color: element.color,
                     }}
@@ -380,6 +439,7 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
                       setSelectedElement(element.id);
                     }}
                     onMouseDown={(e) => handleElementMouseDown(e, element.id)}
+                    onTouchStart={(e) => handleElementTouchStart(e, element.id)}
                   >
                     {element.content}
                   </div>
