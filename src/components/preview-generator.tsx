@@ -100,15 +100,26 @@ export default function PreviewGenerator({
           // Draw background image
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-          // Calculate scaling factors
-          // Template designer uses 600px height with 4:3 aspect ratio (800px width)
-          const scaleX = canvas.width / 800;  // Designer canvas width
-          const scaleY = canvas.height / 600; // Designer canvas height
+          // Calculate scaling factors based on current device canvas dimensions
+          // Use the same responsive canvas dimensions as the template designer and preview
+          const currentCanvasWidth = window.innerWidth < 640 ? 320 : window.innerWidth < 1024 ? 426.67 : 800;
+          const currentCanvasHeight = window.innerWidth < 640 ? 240 : window.innerWidth < 1024 ? 320 : 600;
+          
+          const scaleX = canvas.width / currentCanvasWidth;
+          const scaleY = canvas.height / currentCanvasHeight;
 
           // Draw template elements with proper scaling
           template.elements.forEach((element) => {
             if (element.type === 'text') {
-              ctx.font = `${(element.fontSize || 16) * scaleY}px ${element.fontFamily || 'Arial'}`;
+              // Apply the same responsive font scaling as used in template designer and preview
+              let responsiveFontSize = element.fontSize || 16;
+              if (window.innerWidth < 640) {
+                responsiveFontSize = Math.max(10, responsiveFontSize * 0.7);
+              } else if (window.innerWidth < 1024) {
+                responsiveFontSize = Math.max(12, responsiveFontSize * 0.8);
+              }
+              
+              ctx.font = `${responsiveFontSize * scaleY}px ${element.fontFamily || 'Arial'}`;
               ctx.fillStyle = element.color || '#000000';
               
               const text = element.isVariable && element.variableName
@@ -117,7 +128,7 @@ export default function PreviewGenerator({
               
               // Scale positions to match canvas size
               const scaledX = element.x * scaleX;
-              const scaledY = (element.y + (element.fontSize || 16)) * scaleY;
+              const scaledY = (element.y + responsiveFontSize) * scaleY;
               
               ctx.fillText(text, scaledX, scaledY);
             }
