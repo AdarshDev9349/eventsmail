@@ -419,7 +419,7 @@ export default function PreviewGenerator({
                   style={{ 
                     aspectRatio: '4/3',
                     backgroundColor: '#384e77',
-                    transform: 'scale(0.75)', // Scale down to fit better
+                    transform: window.innerWidth < 640 ? 'scale(0.9)' : window.innerWidth < 1024 ? 'scale(0.8)' : 'scale(0.75)',
                     transformOrigin: 'center'
                   }}
                 >
@@ -436,11 +436,13 @@ export default function PreviewGenerator({
                       key={element.id}
                       className="absolute"
                       style={{
-                        left: `${(element.x / 800) * 100}%`,
-                        top: `${(element.y / 600) * 100}%`,
-                        width: `${(element.width / 800) * 100}%`,
-                        height: `${(element.height / 600) * 100}%`,
-                        fontSize: `${(element.fontSize || 16) * 0.75}px`,
+                        left: `${(element.x / (window.innerWidth < 640 ? 320 : window.innerWidth < 1024 ? 426.67 : 800)) * 100}%`,
+                        top: `${(element.y / (window.innerWidth < 640 ? 240 : window.innerWidth < 1024 ? 320 : 600)) * 100}%`,
+                        width: `${(element.width / (window.innerWidth < 640 ? 320 : window.innerWidth < 1024 ? 426.67 : 800)) * 100}%`,
+                        height: `${(element.height / (window.innerWidth < 640 ? 240 : window.innerWidth < 1024 ? 320 : 600)) * 100}%`,
+                        fontSize: window.innerWidth < 640 ? `${((element.fontSize || 16) * 0.7) * 0.9}px` : 
+                                 window.innerWidth < 1024 ? `${((element.fontSize || 16) * 0.8) * 0.8}px` : 
+                                 `${(element.fontSize || 16) * 0.75}px`,
                         fontFamily: element.fontFamily,
                         color: element.color,
                         display: 'flex',
