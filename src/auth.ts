@@ -12,15 +12,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             "openid",
             "email", 
             "profile",
-            // Gmail scopes
-            "https://www.googleapis.com/auth/gmail.readonly",
+            // Gmail scope for sending emails
             "https://www.googleapis.com/auth/gmail.send",
-            "https://www.googleapis.com/auth/gmail.compose",
-            "https://www.googleapis.com/auth/gmail.modify",
-            // Google Sheets scopes
-            "https://www.googleapis.com/auth/spreadsheets",
-            "https://www.googleapis.com/auth/drive.file",
-            // Google Drive scope for listing files
+            // Google Sheets scope for reading data
+            "https://www.googleapis.com/auth/spreadsheets.readonly",
+            // Google Drive scope for listing spreadsheets
             "https://www.googleapis.com/auth/drive.readonly",
           ].join(" "),
         },
