@@ -182,23 +182,21 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
 
   const handleCanvasMouseMove = useCallback((event: React.MouseEvent) => {
     if (!draggedElement) return;
-    
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
     const rect = canvas.getBoundingClientRect();
     const newX = event.clientX - rect.left - dragOffset.x;
     const newY = event.clientY - rect.top - dragOffset.y;
-    
-    // Constrain to canvas bounds
     const canvasWidth = rect.width;
     const canvasHeight = rect.height;
     const element = template.elements.find(el => el.id === draggedElement);
-    
     if (element) {
-      const constrainedX = Math.max(0, Math.min(newX, canvasWidth - element.width));
-      const constrainedY = Math.max(0, Math.min(newY, canvasHeight - element.height));
-      
+      // Get the actual rendered element size
+      const elDiv = canvas.querySelector(`[data-element-id='${draggedElement}']`) as HTMLDivElement;
+      const elWidth = elDiv ? elDiv.offsetWidth : element.width || 0;
+      const elHeight = elDiv ? elDiv.offsetHeight : element.height || 0;
+      const constrainedX = Math.max(0, Math.min(newX, canvasWidth - elWidth));
+      const constrainedY = Math.max(0, Math.min(newY, canvasHeight - elHeight));
       updateElement(draggedElement, { x: constrainedX, y: constrainedY });
     }
   }, [draggedElement, dragOffset, updateElement, template.elements]);
@@ -206,25 +204,23 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
   // Touch move handler for mobile
   const handleCanvasTouchMove = useCallback((event: React.TouchEvent) => {
     if (!draggedElement) return;
-    
     event.preventDefault();
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
     const touch = event.touches[0];
     const rect = canvas.getBoundingClientRect();
     const newX = touch.clientX - rect.left - dragOffset.x;
     const newY = touch.clientY - rect.top - dragOffset.y;
-    
-    // Constrain to canvas bounds
     const canvasWidth = rect.width;
     const canvasHeight = rect.height;
     const element = template.elements.find(el => el.id === draggedElement);
-    
     if (element) {
-      const constrainedX = Math.max(0, Math.min(newX, canvasWidth - element.width));
-      const constrainedY = Math.max(0, Math.min(newY, canvasHeight - element.height));
-      
+      // Get the actual rendered element size
+      const elDiv = canvas.querySelector(`[data-element-id='${draggedElement}']`) as HTMLDivElement;
+      const elWidth = elDiv ? elDiv.offsetWidth : element.width || 0;
+      const elHeight = elDiv ? elDiv.offsetHeight : element.height || 0;
+      const constrainedX = Math.max(0, Math.min(newX, canvasWidth - elWidth));
+      const constrainedY = Math.max(0, Math.min(newY, canvasHeight - elHeight));
       updateElement(draggedElement, { x: constrainedX, y: constrainedY });
     }
   }, [draggedElement, dragOffset, updateElement, template.elements]);
@@ -419,22 +415,30 @@ export default function TemplateDesigner({ headers, onTemplateComplete, initialT
                 {template.elements.map((element) => (
                   <div
                     key={element.id}
+                    data-element-id={element.id}
                     className={`absolute border-2 select-none ${
                       selectedElement === element.id 
                         ? 'border-blue-500 bg-blue-50 bg-opacity-20 cursor-move touch-manipulation' 
                         : 'border-transparent hover:border-gray-400 cursor-move touch-manipulation'
                     } ${draggedElement === element.id ? 'opacity-70' : ''} ${
-                      window.innerWidth < 1024 ? 'min-h-[44px] min-w-[44px]' : ''
+                      window.innerWidth < 1024 ? 'min-h-[44px] min-w-[4px]' : ''
                     }`}
                     style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      display: 'flex',
                       left: element.x,
                       top: element.y,
-                      width: window.innerWidth < 1024 ? Math.max(element.width, 44) : element.width,
-                      height: window.innerWidth < 1024 ? Math.max(element.height, 44) : element.height,
+                      minWidth: window.innerWidth < 1024 ? '44px' : 'auto',
+                      minHeight: window.innerWidth < 1024 ? '44px' : 'auto',
+                      width: 'auto',
+                      height: 'auto',
                       fontSize: window.innerWidth < 640 ? Math.max(10, (element.fontSize || 16) * 0.7) : 
                                window.innerWidth < 1024 ? Math.max(12, (element.fontSize || 16) * 0.8) : element.fontSize,
                       fontFamily: element.fontFamily,
                       color: element.color,
+                      padding: '2px 10px',
+                      whiteSpace: 'nowrap',
                     }}
                     onClick={(e) => {
                       e.stopPropagation();
