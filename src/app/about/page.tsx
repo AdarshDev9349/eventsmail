@@ -48,82 +48,193 @@ export default async function About() {
         </div>
       </nav>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
-        {/* About Header */}
-        <div className="text-center mb-12 sm:mb-16">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight">
-            About EventsMail
-          </h1>
-          <p className="text-gray-300 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            A straightforward tool for event organizers who need to send certificates and tickets via email.
+      {/* Hero Section with Split Layout */}
+      <div className="relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Text */}
+            <div>
+              <div className="inline-block px-4 py-2 rounded-full mb-6" style={{ backgroundColor: 'rgba(104, 58, 190, 0.2)', border: '1px solid rgba(178, 152, 220, 0.3)' }}>
+                <span className="text-purple-300 text-sm font-medium">About EventsMail</span>
+              </div>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                Send Event Certificates Without the Headache
+              </h1>
+              <p className="text-gray-300 text-lg sm:text-xl mb-8 leading-relaxed">
+                Built by event organizers who got tired of manually sending hundreds of certificates. 
+                No marketing fluff—just a tool that works.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link href={session?.user ? "/certificate-builder" : "/"}>
+                  <button className="px-8 py-4 rounded-xl font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-xl" style={{ background: 'linear-gradient(135deg, #683abe, #b298dc)', color: 'white' }}>
+                    {session?.user ? "Start Sending" : "Try It Now"}
+                  </button>
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Column - Stats */}
+            <div className="grid grid-cols-2 gap-6">
+              <div className="p-6 rounded-2xl backdrop-blur-sm" style={{ backgroundColor: 'rgba(104, 58, 190, 0.2)', border: '1px solid rgba(178, 152, 220, 0.3)' }}>
+                <div className="text-4xl font-bold mb-2" style={{ color: '#b298dc' }}>3</div>
+                <div className="text-gray-300 text-sm">Simple Steps</div>
+              </div>
+              <div className="p-6 rounded-2xl backdrop-blur-sm" style={{ backgroundColor: 'rgba(104, 58, 190, 0.2)', border: '1px solid rgba(178, 152, 220, 0.3)' }}>
+                <div className="text-4xl font-bold mb-2" style={{ color: '#b298dc' }}>0</div>
+                <div className="text-gray-300 text-sm">Setup Hassle</div>
+              </div>
+              <div className="p-6 rounded-2xl backdrop-blur-sm" style={{ backgroundColor: 'rgba(104, 58, 190, 0.2)', border: '1px solid rgba(178, 152, 220, 0.3)' }}>
+                <div className="text-4xl font-bold mb-2" style={{ color: '#b298dc' }}>100%</div>
+                <div className="text-gray-300 text-sm">Your Gmail</div>
+              </div>
+              <div className="p-6 rounded-2xl backdrop-blur-sm" style={{ backgroundColor: 'rgba(104, 58, 190, 0.2)', border: '1px solid rgba(178, 152, 220, 0.3)' }}>
+                <div className="text-4xl font-bold mb-2" style={{ color: '#b298dc' }}>∞</div>
+                <div className="text-gray-300 text-sm">Attendees</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Timeline Section */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-16 text-center">How It Actually Works</h2>
+        
+        <div className="space-y-12">
+          {/* Step 1 */}
+          <div className="flex gap-8 items-start">
+            <div className="flex-shrink-0">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ background: 'linear-gradient(135deg, #683abe, #b298dc)' }}>
+                1
+              </div>
+            </div>
+            <div className="flex-1 pt-1">
+              <h3 className="text-2xl font-bold text-white mb-3">Upload Your Certificate</h3>
+              <p className="text-gray-300 text-lg leading-relaxed mb-4">
+                Got a certificate design? Upload it. Add fields where you want names, event titles, 
+                or any other personalized info to appear.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-3 py-1 rounded-full text-sm" style={{ backgroundColor: 'rgba(104, 58, 190, 0.2)', color: '#b298dc' }}>PNG/JPG</span>
+                <span className="px-3 py-1 rounded-full text-sm" style={{ backgroundColor: 'rgba(104, 58, 190, 0.2)', color: '#b298dc' }}>Drag & Drop</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Step 2 */}
+          <div className="flex gap-8 items-start">
+            <div className="flex-shrink-0">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ background: 'linear-gradient(135deg, #683abe, #b298dc)' }}>
+                2
+              </div>
+            </div>
+            <div className="flex-1 pt-1">
+              <h3 className="text-2xl font-bold text-white mb-3">Connect Google Sheets</h3>
+              <p className="text-gray-300 text-lg leading-relaxed mb-4">
+                Point to your Google Sheet with attendee info. Email addresses, names, custom fields—
+                whatever you need. We'll read it and match it to your certificate.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-3 py-1 rounded-full text-sm" style={{ backgroundColor: 'rgba(104, 58, 190, 0.2)', color: '#b298dc' }}>Auto-Import</span>
+                <span className="px-3 py-1 rounded-full text-sm" style={{ backgroundColor: 'rgba(104, 58, 190, 0.2)', color: '#b298dc' }}>Live Sync</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Step 3 */}
+          <div className="flex gap-8 items-start">
+            <div className="flex-shrink-0">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ background: 'linear-gradient(135deg, #683abe, #b298dc)' }}>
+                3
+              </div>
+            </div>
+            <div className="flex-1 pt-1">
+              <h3 className="text-2xl font-bold text-white mb-3">Preview & Send</h3>
+              <p className="text-gray-300 text-lg leading-relaxed mb-4">
+                Check how everything looks. When you're happy, hit send. Emails go out from your 
+                Gmail account—no third-party sender addresses.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-3 py-1 rounded-full text-sm" style={{ backgroundColor: 'rgba(104, 58, 190, 0.2)', color: '#b298dc' }}>Bulk Send</span>
+                <span className="px-3 py-1 rounded-full text-sm" style={{ backgroundColor: 'rgba(104, 58, 190, 0.2)', color: '#b298dc' }}>From Your Gmail</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Why Section - Bento Grid */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 text-center">Why EventsMail Exists</h2>
+        <p className="text-gray-300 text-lg text-center mb-16 max-w-2xl mx-auto">
+          We organized events. Sending certificates sucked. So we fixed it.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="p-8 rounded-3xl backdrop-blur-sm" style={{ backgroundColor: 'rgba(24, 49, 79, 0.6)', border: '1px solid rgba(178, 152, 220, 0.3)' }}>
+            <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ backgroundColor: '#683abe' }}>
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-white mb-3">We Needed It</h3>
+            <p className="text-gray-300 leading-relaxed">
+              After running hackathons with 200+ participants, manually personalizing and sending certificates 
+              took hours. Existing tools were overkill or didn't integrate with Gmail.
+            </p>
+          </div>
+
+          <div className="p-8 rounded-3xl backdrop-blur-sm" style={{ backgroundColor: 'rgba(24, 49, 79, 0.6)', border: '1px solid rgba(178, 152, 220, 0.3)' }}>
+            <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ backgroundColor: '#b298dc' }}>
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-white mb-3">Keep It Simple</h3>
+            <p className="text-gray-300 leading-relaxed">
+              No fancy CRM. No email marketing automation. No analytics dashboard. Just upload, 
+              connect, send. That's it.
+            </p>
+          </div>
+
+          <div className="p-8 rounded-3xl backdrop-blur-sm" style={{ backgroundColor: 'rgba(24, 49, 79, 0.6)', border: '1px solid rgba(178, 152, 220, 0.3)' }}>
+            <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ backgroundColor: '#00bcd4' }}>
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-white mb-3">Your Email = Trust</h3>
+            <p className="text-gray-300 leading-relaxed">
+              When attendees get certificates from "noreply@someservice.com", it feels impersonal. 
+              EventsMail sends from your actual Gmail, so they know it's you.
+            </p>
+          </div>
+
+          <div className="p-8 rounded-3xl backdrop-blur-sm" style={{ backgroundColor: 'rgba(24, 49, 79, 0.6)', border: '1px solid rgba(178, 152, 220, 0.3)' }}>
+            <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ backgroundColor: '#4285f4' }}>
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-white mb-3">Google Sheets Works</h3>
+            <p className="text-gray-300 leading-relaxed">
+              You're probably already using Google Sheets for registration. Why learn another system? 
+              Just point EventsMail to your existing sheet.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+        <div className="rounded-3xl p-12 text-center backdrop-blur-sm" style={{ background: 'linear-gradient(135deg, rgba(104, 58, 190, 0.3), rgba(178, 152, 220, 0.2))', border: '1px solid rgba(178, 152, 220, 0.3)' }}>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Ready to Stop Manually Sending Certificates?</h2>
+          <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+            Sign in with Google and send your first batch in under 5 minutes.
           </p>
-        </div>
-
-        {/* What It Does */}
-        <div className="mb-12 sm:mb-16 p-6 sm:p-8 rounded-3xl border backdrop-blur-sm" style={{ backgroundColor: 'rgba(24, 49, 79, 0.6)', borderColor: 'rgba(179, 152, 220, 0.3)' }}>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6">What It Does</h2>
-          <div className="space-y-4 text-gray-300 text-base sm:text-lg leading-relaxed">
-            <p>
-              EventsMail helps you send event tickets and certificates to attendees. Upload your certificate template, 
-              import recipient details from Google Sheets, and send personalized emails from your Gmail account.
-            </p>
-            <p>
-              That's it. No complex features, no unnecessary steps. Just the basics you need to get certificates 
-              and tickets delivered to your event participants.
-            </p>
-          </div>
-        </div>
-
-        {/* How It Works */}
-        <div className="mb-12 sm:mb-16 p-6 sm:p-8 rounded-3xl border backdrop-blur-sm" style={{ backgroundColor: 'rgba(24, 49, 79, 0.6)', borderColor: 'rgba(179, 152, 220, 0.3)' }}>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6">How It Works</h2>
-          <div className="space-y-4 text-gray-300 text-base sm:text-lg leading-relaxed">
-            <div>
-              <h3 className="text-white font-semibold mb-2">1. Upload Your Certificate</h3>
-              <p>Upload your certificate or ticket template image. Add placeholders for names and other details.</p>
-            </div>
-            <div>
-              <h3 className="text-white font-semibold mb-2">2. Import from Google Sheets</h3>
-              <p>Connect your Google Sheet with attendee names, emails, and any custom information you want to include.</p>
-            </div>
-            <div>
-              <h3 className="text-white font-semibold mb-2">3. Preview and Send</h3>
-              <p>Check how each certificate looks, then send emails directly from your Gmail account.</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Why We Built This */}
-        <div className="mb-12 sm:mb-16 p-6 sm:p-8 rounded-3xl border backdrop-blur-sm" style={{ backgroundColor: 'rgba(24, 49, 79, 0.6)', borderColor: 'rgba(179, 152, 220, 0.3)' }}>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6">Why We Built This</h2>
-          <div className="space-y-4 text-gray-300 text-base sm:text-lg leading-relaxed">
-            <p>
-              After organizing hackathons and workshops, we kept running into the same problem: sending certificates 
-              to hundreds of participants was time-consuming and error-prone.
-            </p>
-            <p>
-              Existing tools were either too expensive, too complicated, or didn't work with Gmail. So we built 
-              EventsMail to solve this specific problem for event organizers like us.
-            </p>
-          </div>
-        </div>
-
-        {/* Technical Details */}
-        <div className="p-6 sm:p-8 rounded-3xl border backdrop-blur-sm" style={{ backgroundColor: 'rgba(24, 49, 79, 0.6)', borderColor: 'rgba(179, 152, 220, 0.3)' }}>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6">What You Need</h2>
-          <div className="space-y-3 text-gray-300 text-base sm:text-lg leading-relaxed">
-            <p>• A Google account (for Gmail and Google Sheets access)</p>
-            <p>• Your certificate or ticket template as an image</p>
-            <p>• Attendee information in a Google Sheet</p>
-            <p>• That's all</p>
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="text-center mt-12 sm:mt-16">
           <Link href={session?.user ? "/certificate-builder" : "/"}>
-            <button className="px-8 py-4 rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg" style={{ background: 'linear-gradient(135deg, #683abe, #b298dc)', color: 'white' }}>
-              {session?.user ? "Start Sending Emails" : "Get Started"}
+            <button className="px-10 py-5 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl" style={{ background: 'linear-gradient(135deg, #683abe, #b298dc)', color: 'white' }}>
+              {session?.user ? "Go to Certificate Builder" : "Get Started Free"}
             </button>
           </Link>
         </div>
