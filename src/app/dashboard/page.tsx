@@ -28,7 +28,7 @@ export default async function Dashboard() {
               
               <div className="hidden lg:flex items-center space-x-8">
                 <a href="#home" className="text-white hover:text-purple-300 transition-colors duration-300 font-medium">Home</a>
-                <a href="#about" className="text-gray-400 hover:text-white transition-colors duration-300 font-medium">About</a>
+                <a href="/about" className="text-gray-400 hover:text-white transition-colors duration-300 font-medium">About</a>
                 <a href="#features" className="text-gray-400 hover:text-white transition-colors duration-300 font-medium">Features</a>
                 <a href="#pricing" className="text-gray-400 hover:text-white transition-colors duration-300 font-medium">Pricing</a>
                 <a href="#blog" className="text-gray-400 hover:text-white transition-colors duration-300 font-medium">Blog</a>
